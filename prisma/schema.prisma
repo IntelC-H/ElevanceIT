@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model JobDetail {
+  id               String   @id @default(cuid())
+  title            String
+  company          String
+  location         String
+  jobType          String
+  description      String[]
+  responsibilities String[]
+  requirements     String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map(name: "job_details")
+}
+
+model Admin {
+  id       String  @id @default(uuid())
+  username String  @unique
+  password String
+  clerkId  String? @unique
+  role     String
+
+  @@map(name: "admins")
+}
